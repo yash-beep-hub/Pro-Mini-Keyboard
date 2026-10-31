@@ -39,38 +39,46 @@ jobs:
       - name: Prepare APK for Release
         run: |
           mkdir -p output
-          find app/build/outputs/apk -name "*.apk" -exec cp {} output/Pro-Mini-Keyboard-v1.0.0.apk \;
+          find app/build/outputs/apk -name "*.apk" -exec cp {} output/Pro-Mini-Keyboard-v2.0.0.apk \;
           ls -lah output/
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Pro-Mini-Keyboard-v1.0.0.apk
-          path: output/Pro-Mini-Keyboard-v1.0.0.apk
+          name: Pro-Mini-Keyboard-v2.0.0.apk
+          path: output/Pro-Mini-Keyboard-v2.0.0.apk
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
         with:
-          tag_name: v1.0.0
-          name: "Pro Mini Keyboard v1.0.0"
+          tag_name: v2.0.0
+          name: "Pro Mini Keyboard v2.0.0 (V2 Premium + Session Clipboard)"
           body: |
-            ## Pro Mini Keyboard v1.0.0 🚀
+            ## Pro Mini Keyboard v2.0.0 🚀
             
-            Lightweight, high-performance native Android Productivity Keyboard (`InputMethodService`).
+            Major upgrade with **Premium Tablet UI** and **In-Memory Session Clipboard Manager**.
             
-            ### ✨ Features:
-            - **Left Panel (25%)**: Copy, Cut, Delete, Undo (Ctrl+Z), Redo (Ctrl+Shift+Z)
-            - **Center Panel (45%)**: One-tap Switch Keyboard (`showInputMethodPicker()`)
-            - **Right Panel (30%)**: Select All, Paste, DPAD Navigation (◀ ▲ ▼ ▶), Enter
-            - **Zero Bloat**: No background telemetry, no typing key lag, haptic feedback and click sounds disabled.
-            
-            ### 📲 Installation:
-            1. Download `Pro-Mini-Keyboard-v1.0.0.apk` below.
-            2. Install the APK on your Android device or emulator.
-            3. Enable in **Settings → System → Languages & input → On-screen keyboard → Manage on-screen keyboards**.
-            4. Switch to **Productivity Keyboard** in any editor!
-          files: output/Pro-Mini-Keyboard-v1.0.0.apk
+            ### ✨ What's New in V2:
+            - **Centre Panel Clipboard Manager**:
+              - In-memory session-only storage (Max 20 entries, no DB/no files).
+              - Pin/Unpin controls (pinned clips always stay on top).
+              - Individual item deletion & Clear All with confirmation.
+              - Instant paste on clip tap without stealing editor focus.
+              - Sensitive clipboard protection (skips passwords/OTPs on Android 13+).
+              - Neat empty state when no items are copied.
+            - **High-Contrast Premium Tablet UI**:
+              - Dark charcoal/navy `#0F172A` with slate panels and vibrant cyan `#06B6D4` accents.
+              - 8dp/10dp rounded corners, consistent touch targets, high contrast.
+            - **Smart Paste**:
+              - Pastes selected clip, newest clip, or falls back to system clipboard.
+            - **Professional App Branding**:
+              - Custom vector launcher icon with keyboard silhouette and cyan checkmark detail.
+            - **Preserved Core Editing & Navigation**:
+              - Left Panel (25%): Copy, Cut, Delete, Undo (Ctrl+Z), Redo (Ctrl+Shift+Z).
+              - Right Panel (30%): Select All, Paste, DPAD Navigation (◀ ▲ ▼ ▶), Enter.
+              - Silent & Fast: Zero typing bloat, zero haptics, zero click sound.
+          files: output/Pro-Mini-Keyboard-v2.0.0.apk
           draft: false
           prerelease: false
         env:

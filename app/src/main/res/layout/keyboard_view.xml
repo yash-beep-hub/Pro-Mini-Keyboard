@@ -2,34 +2,50 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/keyboard_root"
     android:layout_width="match_parent"
-    android:layout_height="220dp"
+    android:layout_height="250dp"
     android:orientation="horizontal"
     android:baselineAligned="false"
     android:weightSum="100"
     android:padding="6dp"
-    android:background="#1E1E24"
+    android:background="#0F172A"
     android:soundEffectsEnabled="false"
     android:hapticFeedbackEnabled="false">
 
-    <!-- LEFT PANEL: EDITING (25%) -->
+    <!-- LEFT PANEL: EDITING TOOLS (25%) -->
     <LinearLayout
         android:id="@+id/panel_editing"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="25"
+        android:layout_marginEnd="4dp"
         android:orientation="vertical"
-        android:padding="2dp">
+        android:background="@drawable/bg_panel"
+        android:padding="5dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="EDITING"
+            android:textColor="#94A3B8"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:paddingBottom="3dp" />
 
         <Button
             android:id="@+id/btn_copy"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:layout_margin="2dp"
+            android:layout_margin="1.5dp"
+            android:background="@drawable/bg_keyboard_button"
             android:text="COPY"
             android:textColor="#FFFFFF"
-            android:textSize="13sp"
+            android:textSize="12sp"
+            android:textStyle="bold"
             android:contentDescription="Copy"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             android:soundEffectsEnabled="false"
             android:hapticFeedbackEnabled="false" />
 
@@ -38,11 +54,15 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:layout_margin="2dp"
+            android:layout_margin="1.5dp"
+            android:background="@drawable/bg_keyboard_button"
             android:text="CUT"
             android:textColor="#FFFFFF"
-            android:textSize="13sp"
+            android:textSize="12sp"
+            android:textStyle="bold"
             android:contentDescription="Cut"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             android:soundEffectsEnabled="false"
             android:hapticFeedbackEnabled="false" />
 
@@ -51,11 +71,15 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:layout_margin="2dp"
+            android:layout_margin="1.5dp"
+            android:background="@drawable/bg_keyboard_button"
             android:text="DELETE"
             android:textColor="#FFFFFF"
-            android:textSize="13sp"
+            android:textSize="12sp"
+            android:textStyle="bold"
             android:contentDescription="Delete"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             android:soundEffectsEnabled="false"
             android:hapticFeedbackEnabled="false" />
 
@@ -64,11 +88,15 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:layout_margin="2dp"
+            android:layout_margin="1.5dp"
+            android:background="@drawable/bg_keyboard_button"
             android:text="UNDO"
             android:textColor="#FFFFFF"
-            android:textSize="13sp"
+            android:textSize="12sp"
+            android:textStyle="bold"
             android:contentDescription="Undo"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             android:soundEffectsEnabled="false"
             android:hapticFeedbackEnabled="false" />
 
@@ -77,47 +105,148 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:layout_margin="2dp"
+            android:layout_margin="1.5dp"
+            android:background="@drawable/bg_keyboard_button"
             android:text="REDO"
             android:textColor="#FFFFFF"
-            android:textSize="13sp"
+            android:textSize="12sp"
+            android:textStyle="bold"
             android:contentDescription="Redo"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             android:soundEffectsEnabled="false"
             android:hapticFeedbackEnabled="false" />
     </LinearLayout>
 
-    <!-- CENTER PANEL: KEYBOARD SWITCHING (45%) -->
+    <!-- CENTRE PANEL: SESSION CLIPBOARD MANAGER (45%) -->
     <LinearLayout
         android:id="@+id/panel_center"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="45"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp"
         android:orientation="vertical"
-        android:gravity="center"
-        android:padding="4dp">
+        android:background="@drawable/bg_panel"
+        android:padding="6dp">
 
+        <!-- Header: Title and Clear All -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingBottom="4dp">
+
+            <TextView
+                android:id="@+id/tv_clipboard_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="CLIPBOARD (SESSION)"
+                android:textColor="#22D3EE"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btn_clear_clipboard"
+                android:layout_width="wrap_content"
+                android:layout_height="26dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:background="@drawable/bg_keyboard_button_danger"
+                android:text="CLEAR ALL"
+                android:textColor="#FCA5A5"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:contentDescription="Clear All Clipboard Items"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:soundEffectsEnabled="false"
+                android:hapticFeedbackEnabled="false" />
+        </LinearLayout>
+
+        <!-- Container for List or Empty State -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <!-- Clipboard List -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_clipboard"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical"
+                android:overScrollMode="never"
+                android:focusable="false"
+                android:focusableInTouchMode="false" />
+
+            <!-- Empty State View -->
+            <LinearLayout
+                android:id="@+id/ll_empty_state"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:visibility="visible">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Your clipboard is empty"
+                    android:textColor="#94A3B8"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Copy text to see it here."
+                    android:textColor="#64748B"
+                    android:textSize="11sp" />
+            </LinearLayout>
+        </FrameLayout>
+
+        <!-- Switch Keyboard Button at Bottom of Centre Panel -->
         <Button
             android:id="@+id/btn_switch_keyboard"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="6dp"
-            android:text="SWITCH KEYBOARD"
+            android:layout_height="36dp"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/bg_keyboard_button_accent"
+            android:text="&#x1F310; SWITCH KEYBOARD"
             android:textColor="#FFFFFF"
-            android:textSize="16sp"
+            android:textSize="12sp"
             android:textStyle="bold"
             android:contentDescription="Switch Keyboard"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             android:soundEffectsEnabled="false"
             android:hapticFeedbackEnabled="false" />
     </LinearLayout>
 
-    <!-- RIGHT PANEL: NAVIGATION (30%) -->
+    <!-- RIGHT PANEL: NAVIGATION & ACTIONS (30%) -->
     <LinearLayout
         android:id="@+id/panel_navigation"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="30"
+        android:layout_marginStart="4dp"
         android:orientation="vertical"
-        android:padding="2dp">
+        android:background="@drawable/bg_panel"
+        android:padding="5dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="NAVIGATION"
+            android:textColor="#94A3B8"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:paddingBottom="3dp" />
 
         <!-- Top row: Select All & Paste -->
         <LinearLayout
@@ -131,11 +260,15 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:layout_margin="2dp"
+                android:layout_margin="1.5dp"
+                android:background="@drawable/bg_keyboard_button"
                 android:text="SELECT ALL"
                 android:textColor="#FFFFFF"
                 android:textSize="11sp"
+                android:textStyle="bold"
                 android:contentDescription="Select All"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
                 android:soundEffectsEnabled="false"
                 android:hapticFeedbackEnabled="false" />
 
@@ -144,11 +277,15 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:layout_margin="2dp"
+                android:layout_margin="1.5dp"
+                android:background="@drawable/bg_keyboard_button_accent"
                 android:text="PASTE"
                 android:textColor="#FFFFFF"
                 android:textSize="11sp"
+                android:textStyle="bold"
                 android:contentDescription="Paste"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
                 android:soundEffectsEnabled="false"
                 android:hapticFeedbackEnabled="false" />
         </LinearLayout>
@@ -165,11 +302,14 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:layout_margin="2dp"
+                android:layout_margin="1.5dp"
+                android:background="@drawable/bg_keyboard_button"
                 android:text="&#x25C0;"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp"
                 android:contentDescription="Arrow Left"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
                 android:soundEffectsEnabled="false"
                 android:hapticFeedbackEnabled="false" />
 
@@ -178,11 +318,14 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:layout_margin="2dp"
+                android:layout_margin="1.5dp"
+                android:background="@drawable/bg_keyboard_button"
                 android:text="&#x25B2;"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp"
                 android:contentDescription="Arrow Up"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
                 android:soundEffectsEnabled="false"
                 android:hapticFeedbackEnabled="false" />
 
@@ -191,11 +334,14 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:layout_margin="2dp"
+                android:layout_margin="1.5dp"
+                android:background="@drawable/bg_keyboard_button"
                 android:text="&#x25BC;"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp"
                 android:contentDescription="Arrow Down"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
                 android:soundEffectsEnabled="false"
                 android:hapticFeedbackEnabled="false" />
 
@@ -204,11 +350,14 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:layout_margin="2dp"
+                android:layout_margin="1.5dp"
+                android:background="@drawable/bg_keyboard_button"
                 android:text="&#x25B6;"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp"
                 android:contentDescription="Arrow Right"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
                 android:soundEffectsEnabled="false"
                 android:hapticFeedbackEnabled="false" />
         </LinearLayout>
@@ -224,11 +373,15 @@
                 android:id="@+id/btn_enter"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="2dp"
+                android:layout_margin="1.5dp"
+                android:background="@drawable/bg_keyboard_button_accent"
                 android:text="ENTER"
                 android:textColor="#FFFFFF"
                 android:textSize="13sp"
+                android:textStyle="bold"
                 android:contentDescription="Enter"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
                 android:soundEffectsEnabled="false"
                 android:hapticFeedbackEnabled="false" />
         </LinearLayout>
