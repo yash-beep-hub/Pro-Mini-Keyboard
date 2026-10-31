@@ -1,62 +1,57 @@
-# Pro-Mini-Keyboard ⌨️📱
+# Pro Mini Keyboard ⌨️📱
 
-A lightweight, native Android productivity keyboard (`InputMethodService`) built in Kotlin for landscape tablet and phone workflows.
+A lightweight, high-performance, native Android productivity keyboard (`InputMethodService`) built exclusively for editing, text navigation, and keyboard switching.
 
-This keyboard is dedicated strictly to text manipulation, cursor navigation, and fast keyboard switching—free from typing keys, analytics, or background bloat.
-
-[![Build and Release Android APK](https://github.com/yashclashofclan0008/Pro-Mini-Keyboard/actions/workflows/build-and-release.yml/badge.svg)](https://github.com/yashclashofclan0008/Pro-Mini-Keyboard/actions/workflows/build-and-release.yml)
-[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-
----
-
-## 🚀 Features
-
-- **Editing Panel (25%)**:
-  - `COPY` — `currentInputConnection.performContextMenuAction(android.R.id.copy)`
-  - `CUT` — `currentInputConnection.performContextMenuAction(android.R.id.cut)`
-  - `DELETE` — Smart deletion: replaces selection with empty string via `commitText()` or deletes preceding character via `deleteSurroundingText(1, 0)`
-  - `UNDO` — Emits `KeyEvent.KEYCODE_Z` with `KeyEvent.META_CTRL_ON`
-  - `REDO` — Emits `KeyEvent.KEYCODE_Z` with `KeyEvent.META_CTRL_ON | KeyEvent.META_SHIFT_ON`
-- **Center IME Switcher (45%)**:
-  - Prominent full-height button triggering `InputMethodManager.showInputMethodPicker()` to quickly switch back to your QWERTY keyboard.
-- **Navigation Panel (30%)**:
-  - `SELECT ALL` — `currentInputConnection.performContextMenuAction(android.R.id.selectAll)`
-  - `PASTE` — `currentInputConnection.performContextMenuAction(android.R.id.paste)`
-  - `DPAD Arrows` — `sendDownUpKeyEvents(KEYCODE_DPAD_LEFT / RIGHT / UP / DOWN)` for fluid caret movement
-  - `ENTER` — Context-aware: triggers `sendDefaultEditorAction(true)` on single-line actions or sends `KEYCODE_ENTER`
-- **Zero Overhead**:
-  - No typing keys, no clipboard database, no network calls, zero sound effects, zero haptic latency.
+![Platform](https://img.shields.io/badge/Platform-Android-green?logo=android)
+![Min SDK](https://img.shields.io/badge/Min%20SDK-API%2021%2B-blue)
+![Kotlin](https://img.shields.io/badge/Language-Kotlin-purple?logo=kotlin)
+![Build](https://img.shields.io/badge/Status-Automated%20Release-brightgreen)
 
 ---
 
-## 📦 Download APK
+## 🎯 Architecture & Layout
 
-Directly download the ready-to-install APK from the **[Releases](https://github.com/yashclashofclan0008/Pro-Mini-Keyboard/releases)** page:
-- `Pro-Mini-Keyboard-v1.0.0.apk`
+Engineered specifically for tablet landscape usage with a 3-panel horizontal distribution:
 
----
-
-## 🛠️ Build Locally
-
-```bash
-git clone https://github.com/yashclashofclan0008/Pro-Mini-Keyboard.git
-cd Pro-Mini-Keyboard
-./gradlew assembleDebug
+```
++-------------------+----------------------------+-----------------------+
+|  EDITING (25%)    |      SWITCHER (45%)        |   NAVIGATION (30%)    |
++-------------------+----------------------------+-----------------------+
+| [ COPY ]          |                            | [SELECT ALL] [PASTE]  |
+| [ CUT ]           |                            +-----------------------+
+| [ DELETE ]        |     [ SWITCH KEYBOARD ]    | [ ◀ ] [ ▲ ] [ ▼ ] [ ▶ ]|
+| [ UNDO ]          |                            +-----------------------+
+| [ REDO ]          |                            |       [ ENTER ]       |
++-------------------+----------------------------+-----------------------+
 ```
 
-The APK will be generated at:
-`app/build/outputs/apk/debug/app-debug.apk`
+### 1. Left Panel (25%) — Editing Controls
+- **COPY**: `performContextMenuAction(android.R.id.copy)`
+- **CUT**: `performContextMenuAction(android.R.id.cut)`
+- **DELETE**: Safe selection replacement or `deleteSurroundingText(1, 0)`
+- **UNDO**: Native hardware `KeyEvent.KEYCODE_Z` with `META_CTRL_ON`
+- **REDO**: Native hardware `KeyEvent.KEYCODE_Z` with `META_CTRL_ON | META_SHIFT_ON`
 
-Install via ADB:
-```bash
-adb install -r app/build/outputs/apk/debug/app-debug.apk
-```
+### 2. Center Panel (45%) — Fast Switcher
+- **SWITCH KEYBOARD**: Triggers `InputMethodManager.showInputMethodPicker()` directly from the main thread.
+
+### 3. Right Panel (30%) — Navigation & Actions
+- **SELECT ALL**: `performContextMenuAction(android.R.id.selectAll)`
+- **PASTE**: `performContextMenuAction(android.R.id.paste)`
+- **ARROWS (◀ ▲ ▼ ▶)**: `sendDownUpKeyEvents(KEYCODE_DPAD_*)` for cursor movements
+- **ENTER**: Smart detection of `EditorInfo.imeOptions` (executes single-line IME actions or `KEYCODE_ENTER`)
 
 ---
 
-## ⚙️ Enabling on Android
+## 🚀 How to Enable
 
-1. Open **Settings** on your Android device.
-2. Go to **System** → **Languages & input** → **On-screen keyboard** → **Manage on-screen keyboards**.
-3. Enable **Productivity Keyboard**.
-4. In any text area, open the keyboard switcher and choose **Productivity Keyboard**.
+1. Install the APK onto your Android device or emulator.
+2. Go to **Settings → System → Languages & input → On-screen keyboard → Manage on-screen keyboards**.
+3. Toggle on **Productivity Keyboard**.
+4. In any app, switch to **Productivity Keyboard** using the input method switcher.
+
+---
+
+## 📦 Automated Release via GitHub Actions
+
+This repository includes `.github/workflows/build-apk.yml`. Every commit or tag automatically builds the APK and publishes it to GitHub Releases.
