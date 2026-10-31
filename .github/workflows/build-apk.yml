@@ -23,26 +23,28 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-          cache: gradle
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Grant Execute Permission to Gradle
-        run: chmod +x gradlew || true
+      - name: Setup Gradle 8.2
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: '8.2'
 
       - name: Build APK with Gradle
-        run: ./gradlew assembleDebug --stacktrace
+        run: gradle assembleDebug --stacktrace
 
-      - name: Rename APK
+      - name: Prepare APK for Release
         run: |
           mkdir -p output
-          cp app/build/outputs/apk/debug/app-debug.apk output/Pro-Mini-Keyboard-v1.0.0.apk
+          find app/build/outputs/apk -name "*.apk" -exec cp {} output/Pro-Mini-Keyboard-v1.0.0.apk \;
+          ls -lah output/
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Pro-Mini-Keyboard-APK
+          name: Pro-Mini-Keyboard-v1.0.0.apk
           path: output/Pro-Mini-Keyboard-v1.0.0.apk
 
       - name: Create GitHub Release
@@ -52,16 +54,21 @@ jobs:
           tag_name: v1.0.0
           name: "Pro Mini Keyboard v1.0.0"
           body: |
-            ## Pro Mini Keyboard v1.0.0
-            Minimal Android Productivity Keyboard (InputMethodService).
+            ## Pro Mini Keyboard v1.0.0 🚀
             
-            ### Included Features:
-            - **Editing Panel (25%)**: Copy, Cut, Delete, Undo (Ctrl+Z), Redo (Ctrl+Shift+Z)
-            - **Center Switcher (45%)**: One-tap Switch Keyboard (`showInputMethodPicker()`)
-            - **Navigation Panel (30%)**: Select All, Paste, DPAD Navigation (Left, Up, Down, Right), Enter
-            - **Clean & Fast**: Zero typing bloat, zero haptics, zero sound effects.
+            Lightweight, high-performance native Android Productivity Keyboard (`InputMethodService`).
             
-            Download the APK below and install on your Android device!
+            ### ✨ Features:
+            - **Left Panel (25%)**: Copy, Cut, Delete, Undo (Ctrl+Z), Redo (Ctrl+Shift+Z)
+            - **Center Panel (45%)**: One-tap Switch Keyboard (`showInputMethodPicker()`)
+            - **Right Panel (30%)**: Select All, Paste, DPAD Navigation (◀ ▲ ▼ ▶), Enter
+            - **Zero Bloat**: No background telemetry, no typing key lag, haptic feedback and click sounds disabled.
+            
+            ### 📲 Installation:
+            1. Download `Pro-Mini-Keyboard-v1.0.0.apk` below.
+            2. Install the APK on your Android device or emulator.
+            3. Enable in **Settings → System → Languages & input → On-screen keyboard → Manage on-screen keyboards**.
+            4. Switch to **Productivity Keyboard** in any editor!
           files: output/Pro-Mini-Keyboard-v1.0.0.apk
           draft: false
           prerelease: false
