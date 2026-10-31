@@ -1,0 +1,6 @@
+{
+  "name": "Android Productivity Keyboard",
+  "description": "Minimal native Android InputMethodService productivity keyboard with editing, navigation, and keyboard switching.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
